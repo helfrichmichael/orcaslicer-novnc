@@ -3,7 +3,7 @@
     <menu id="root-menu" label="Openbox 3">
         <item label="Orcaslicer">
             <action name="Execute">
-                <execute>/orcaslicer/squashfs-root/AppRun</execute>
+                <execute>/orcaslicer/squashfs-root/AppRun --datadir /configs/</execute>
             </action>
         </item>
         <item label="Terminal">

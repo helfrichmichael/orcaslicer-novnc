@@ -59,8 +59,9 @@ RUN chown -R orcaslicer:orcaslicer /orcaslicer/ /home/orcaslicer/ /prints/ /conf
 RUN locale-gen en_US 
 RUN mkdir /configs/.local 
 RUN mkdir -p /configs/.config/ 
-RUN ln -s /configs/.config/ /home/orcaslicer/ 
+RUN ln -s /configs/.config/ /home/orcaslicer/
 RUN mkdir -p /home/orcaslicer/.config/
+RUN mkdir -p /home/orcaslicer/.config/OrcaSlicer/
 # We can now set the Download directory for Firefox and other browsers. 
 # We can also add /prints/ to the file explorer bookmarks for easy access.
 RUN echo "XDG_DOWNLOAD_DIR=\"/prints/\"" >> /home/orcaslicer/.config/user-dirs.dirs 
