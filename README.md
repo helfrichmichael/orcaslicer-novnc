@@ -19,6 +19,14 @@ To run this image, you can run the following command: `docker run --detach --vol
 
 This will bind `/configs/` in the container to a local volume on my machine named `orcaslicer-novnc-data`. Additionally it will bind `/prints/` in the container to `orcaslicer-novnc-prints` locally on my machine, it will bind port `8080` to `8080`, and finally, it will provide an environment variable to keep OrcaSlicer happy by providing an `SSL_CERT_FILE`.
 
+
+**GPU Acceleration/Passthrough**
+
+Like other Docker containers, you can pass your Nvidia GPU into the container using the `NVIDIA_VISIBLE_DEVICES` and `NVIDIA_DRIVER_CAPABILITIES` envs. You can define these using the value of `all` or by providing more narrow and specific values. This has only been tested on Nvidia GPUs.
+
+In unraid you can set these values during set up. For containers outside of unraid, you can set this by adding the following params or similar  `-e NVIDIA_DRIVER_CAPABILITIES="all" NVIDIA_VISIBLE_DEVICES="all"`
+
+
 ## Links
 
 [OrcaSlicer](https://github.com/SoftFever/OrcaSlicer)

@@ -42,13 +42,10 @@ RUN chmod +x /orcaslicer/get_release_info.sh
 RUN latestOrcaslicer=$(/orcaslicer/get_release_info.sh url) \
 && echo ${latestOrcaslicer} \
 && orcaslicerReleaseName=$(/orcaslicer/get_release_info.sh name) \
-&& curl -sSL ${latestOrcaslicer} > ${orcaslicerReleaseName} \
-&& rm -f /orcaslicer/releaseInfo.json \
-&& mkdir -p /orcaslicer/orcaslicer-dist \
-&& unzip ${orcaslicerReleaseName} -d /orcaslicer/orcaslicer-dist \
-&& chmod 775 /orcaslicer/orcaslicer-dist/OrcaSlicer_ubu64.AppImage \
-&& /orcaslicer/orcaslicer-dist/OrcaSlicer_ubu64.AppImage --appimage-extract \
-&& rm -f /orcaslicer/${orcaslicerReleaseName}
+&& curl -sSL ${latestOrcaslicer} > /orcaslicer/orcaslicer-dist/orcaslicer.AppImage \
+&& chmod -R 775 /orcaslicer/orcaslicer-dist/orcaslicer.AppImage \
+&& dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of=orcaslicer-dist/orcaslicer.AppImage \
+&& bash -c "/orcaslicer/orcaslicer-dist/orcaslicer.AppImage --appimage-extract"
 
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get autoclean 
