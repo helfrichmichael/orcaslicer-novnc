@@ -1,0 +1,4 @@
+{
+    // On my server I don't have GPG keys installed
+    "git.enableCommitSigning": false,
+}
