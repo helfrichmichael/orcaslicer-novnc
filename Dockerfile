@@ -48,24 +48,24 @@ RUN latestOrcaslicer=$(/orcaslicer/get_release_info.sh url) \
 && bash -c "/orcaslicer/orcaslicer-dist/orcaslicer.AppImage --appimage-extract"
 
 RUN rm -rf /var/lib/apt/lists/*
-RUN apt-get autoclean 
+RUN apt-get autoclean
 RUN chmod -R 777 /orcaslicer/
 RUN groupadd orcaslicer
 RUN useradd -g orcaslicer --create-home --home-dir /home/orcaslicer orcaslicer
 RUN mkdir -p /orcaslicer
-RUN mkdir -p /configs 
-RUN mkdir -p /prints/ 
-RUN chown -R orcaslicer:orcaslicer /orcaslicer/ /home/orcaslicer/ /prints/ /configs/ 
-RUN locale-gen en_US 
-RUN mkdir /configs/.local 
-RUN mkdir -p /configs/.config/ 
+RUN mkdir -p /configs
+RUN mkdir -p /prints/
+RUN chown -R orcaslicer:orcaslicer /orcaslicer/ /home/orcaslicer/ /prints/ /configs/
+RUN locale-gen en_US
+RUN mkdir /configs/.local
+RUN mkdir -p /configs/.config/
 RUN ln -s /configs/.config/ /home/orcaslicer/
 RUN mkdir -p /home/orcaslicer/.config/
 RUN mkdir -p /home/orcaslicer/.config/OrcaSlicer/
-# We can now set the Download directory for Firefox and other browsers. 
+# We can now set the Download directory for Firefox and other browsers.
 # We can also add /prints/ to the file explorer bookmarks for easy access.
-RUN echo "XDG_DOWNLOAD_DIR=\"/prints/\"" >> /home/orcaslicer/.config/user-dirs.dirs 
-RUN echo "file:///prints prints" >> /home/orcaslicer/.gtk-bookmarks 
+RUN echo "XDG_DOWNLOAD_DIR=\"/prints/\"" >> /home/orcaslicer/.config/user-dirs.dirs
+RUN echo "file:///prints prints" >> /home/orcaslicer/.gtk-bookmarks
 
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/
 COPY menu.xml /etc/xdg/openbox/
