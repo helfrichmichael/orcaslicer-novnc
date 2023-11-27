@@ -27,7 +27,15 @@ RUN apt autoclean -y \
 
 # Install cc-vnc
 
-# Add installation steps for cc-vnc here
+# Copy cookie clicker source
+COPY /app /app
+
+# Build cookie clicker (electron app)
+RUN cd /app && npm install && npm run build
+
+# Copy electron app to /usr/share/cc-vnc
+RUN mkdir -p /usr/share/cc-vnc \
+    && cp -r /app/dist/* /usr/share/cc-vnc
 
 # Copy noVNC and TigerVNC from the build stage.
 COPY --from=easy-novnc-build /bin/easy-novnc /bin/easy-novnc
