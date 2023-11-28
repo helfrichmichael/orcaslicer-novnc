@@ -2,8 +2,9 @@ version: '3'
 
 services:
   cc-vnc:
-    container_name: cc-vnc
+    container_name: cc-novnc
     privileged: true # For setup FUSE filesystem for AppImage
+    restart: unless-stopped
     build:
       context: .
     ports:
