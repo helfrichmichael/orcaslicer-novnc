@@ -87,3 +87,7 @@ If you encounter any problems or bugs:
 ## Licensing
 
 This project is licensed under the MIT License. For more details, check the [LICENSE](LICENSE) file.
+
+## Legal Disclaimer
+
+I will not provide a pre-build container becuase it contains a copy of Cookie Clicker, which is a commercial product. You must purchase Cookie Clicker from Steam and follow the steps in this guide to build the container yourself. I am not responsible for any legal issues (if any) that may arise from using this project. Please use it at your own risk.
