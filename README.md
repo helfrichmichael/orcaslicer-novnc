@@ -82,7 +82,7 @@ Welcome to cc-novnc, your remote control for the ultimate Cookie Empire experien
 If you encounter any problems or bugs:
 
 - Visit [GitHub](https://github.com/staninna/cc-novnc/issues/new) to report issues.
-- Known issue: If the game crashes or hangs when the browser window is large, make it smaller and close the game using the 'X' at the top right; then, the game will restart automatically.
+- Known issue: If the game crashes or hangs when the browser window is large, make it smaller and close the game using the 'X' at the top right; then, the game will restart automatically after a minute or so.
 
 ## Licensing
 
