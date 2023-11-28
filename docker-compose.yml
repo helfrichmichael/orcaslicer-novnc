@@ -1,1 +1,14 @@
-TODO: Make docker-compose.yml file
+version: '3'
+
+services:
+  cc-vnc:
+    container_name: cc-vnc
+    privileged: true # For setup FUSE filesystem for AppImage
+    image: cc-novnc:0.0.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./save:/cc-vnc/save
+      - ./conf/supervisor:/etc/supervisor
+      - ./conf/openbox:/etc/xdg/openbox
+    network_mode: "bridge"
