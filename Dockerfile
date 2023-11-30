@@ -38,10 +38,9 @@ RUN cd /cc-novnc && \
     npm install -g electron@latest
 
 # Create directories for volumes
-RUN mkdir -p /cc-novnc/config /cc-novnc/save
+RUN mkdir -p /cc-novnc/save
 
 # Bind volumes for configuration and data
-VOLUME /cc-novnc/config
 VOLUME /cc-novnc/save
 
 # Create a user
@@ -54,6 +53,9 @@ RUN touch /supervisord.log && \
 # Copy startup script and set permissions
 COPY /cc-novnc.sh /cc-novnc/cc-novnc.sh
 RUN chmod +x /cc-novnc/cc-novnc.sh
+
+# Copy supervisord configuration
+COPY /supervisord.conf /cc-novnc/config/supervisord.conf
 
 # Expose ports
 EXPOSE 8080
