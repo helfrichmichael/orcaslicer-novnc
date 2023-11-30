@@ -11,9 +11,3 @@ services:
       - "8080:8080"
     volumes:
       - ./save:/cc-novnc/save
-    networks:
-      - nginx-network # Ensure it's on the same network as Nginx Proxy Manager
-
-networks:
-  nginx-network:
-    external: true
