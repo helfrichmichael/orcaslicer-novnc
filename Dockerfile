@@ -14,7 +14,7 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
-# Install cc-vnc dependencies
+# Install cc-novnc dependencies
 RUN apt update && apt install -y --no-install-recommends --allow-unauthenticated \
     nodejs npm
 
@@ -23,24 +23,24 @@ RUN apt autoclean -y && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Install cc-vnc
+# Install cc-novnc
 COPY /app /app
 RUN cd /app && npm install && npm run build
-RUN mkdir -p /cc-vnc && cp -r /app/dist/* /cc-vnc
+RUN mkdir -p /cc-novnc && cp -r /app/dist/* /cc-novnc
 COPY --from=easy-novnc-build /bin/easy-novnc /bin/easy-novnc
 
 # Make directories for volumes
-RUN mkdir -p /etc/supervisor/conf.d /etc/xdg/openbox /cc-vnc/save
+RUN mkdir -p /etc/supervisor/conf.d /etc/xdg/openbox /cc-novnc/save
 
 # Bind volumes for configuration and data
 VOLUME /etc/supervisor/
 VOLUME /etc/xdg/openbox
-VOLUME /cc-vnc/save
+VOLUME /cc-novnc/save
 
 # Expose the noVNC port
 EXPOSE 8080
 
-# Modified code for cc-vnc
+# Modified code for cc-novnc
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     software-properties-common && \
@@ -52,16 +52,16 @@ RUN apt-get update && \
 RUN apt-get install libasound2 libgbm-dev -y
 
 # Create user
-RUN useradd -ms /bin/bash cc-vnc && \
-    mkdir -p /home/cc-vnc && \
-    chown -R cc-vnc:cc-vnc /home/cc-vnc && \
+RUN useradd -ms /bin/bash cc-novnc && \
+    mkdir -p /home/cc-novnc && \
+    chown -R cc-novnc:cc-novnc /home/cc-novnc && \
     mkdir -p /var/log/supervisor && \
     touch /var/log/supervisor/supervisord.log && \
-    chown -R cc-vnc:cc-vnc /var/log/supervisor
+    chown -R cc-novnc:cc-novnc /var/log/supervisor
 
-RUN chown -R cc-vnc:cc-vnc /cc-vnc
-RUN chown -R cc-vnc:cc-vnc /etc/supervisor/conf.d
+RUN chown -R cc-novnc:cc-novnc /cc-novnc
+RUN chown -R cc-novnc:cc-novnc /etc/supervisor/conf.d
 RUN touch /supervisord.log
-RUN chown cc-vnc:cc-vnc /supervisord.log
+RUN chown cc-novnc:cc-novnc /supervisord.log
 
-CMD ["bash", "-c", "chown -R cc-vnc:cc-vnc /cc-vnc/CookieClicker-1.0.0.AppImage && exec gosu cc-vnc supervisord -c /etc/supervisor/supervisord.conf"]
+CMD ["bash", "-c", "chown -R cc-novnc:cc-novnc /cc-novnc/CookieClicker-1.0.0.AppImage && exec gosu cc-novnc supervisord -c /etc/supervisor/supervisord.conf"]

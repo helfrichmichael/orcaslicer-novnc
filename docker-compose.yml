@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  cc-vnc:
+  cc-novnc:
     container_name: cc-novnc
     privileged: true # For setup FUSE filesystem for AppImage
     restart: unless-stopped
@@ -10,7 +10,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./save:/cc-vnc/save
+      - ./save:/cc-novnc/save
       - ./conf/supervisor:/etc/supervisor
       - ./conf/openbox:/etc/xdg/openbox
     network_mode: "bridge"
