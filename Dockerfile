@@ -18,7 +18,7 @@ RUN apt-get update -y && \
 RUN apt update && apt install -y --no-install-recommends --allow-unauthenticated \
     nodejs npm \
     # Dependencies for electron
-    libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
+    libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libasound2
 
 # Clean up
 RUN apt autoclean -y && \
@@ -57,14 +57,5 @@ RUN touch /supervisord.log && \
 # Copy startup script
 COPY /cc-novnc.sh /cc-novnc/cc-novnc.sh
 RUN chmod +x /cc-novnc/cc-novnc.sh
-
-# New electron dependency (put here for faster builds)
-RUN apt update && apt install -y --no-install-recommends --allow-unauthenticated \
-    libasound2
-
-# Clean up
-RUN apt autoclean -y && \
-    apt autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
 
 CMD ["bash", "-c", "exec gosu cc-novnc supervisord -c /cc-novnc/config/supervisord.conf"]

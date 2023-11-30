@@ -26,42 +26,12 @@ Welcome to cc-novnc, your remote control for the ultimate Cookie Empire experien
 3. **Find Cookie Clicker Directory:** Look for the folder where Cookie Clicker is installed.
 4. **Locate the 'app' Folder:** Inside the Cookie Clicker directory, find the 'app' folder.
 5. **Move 'app' Folder:** Copy the 'app' folder and paste it into the folder you got from the repository.
-6. **Make a Change:** Open a file named 'start.js' and remove the two slashes in front of `app.disableHardwareAcceleration();`.
-7. **Edit 'package.json':** Replace the contents of 'package.json' with the provided text.
 
-```json
-{
-  "name": "cookie-electron",
-  "version": "1.0.0",
-  "author": {
-    "name": "Orteil",
-    "email": "Orteil@example.com"
-  },
-  "homepage": "https://store.steampowered.com/app/1454400/Cookie_Clicker/",
-  "description": "Cookie Clicker standalone",
-  "main": "start.js",
-  "license": "ISC",
-  "dependencies": {
-    "adm-zip": "^0.5.9",
-    "steamapi": "^2.1.1"
-  },
-  "scripts": {
-    "build": "electron-builder build"
-  },
-  "devDependencies": {
-    "electron": "^11.2.3",
-    "electron-builder": "^22.9.1"
-  },
-  "build": {
-    "appId": "com.cookie.electron",
-    "productName": "CookieClicker",
-    "linux": {
-      "target": "AppImage",
-      "icon": "src/icon.png"
-    }
-  }
-}
-```
+## Load your Cookie Clicker Save
+
+1. **Copy your Save:** Start Cookie Clicker on your local computer and create a save. You can use the 'Export Save' to copy the save to your clipboard.
+2. **Create save Folder:** Create a folder named 'save' in the same directory as the 'config' folder.
+2. **Create a your Save File:** Create a file named 'save.cki' in the 'save' folder and paste your save into it.
 
 ## Installing the Docker Container
 
