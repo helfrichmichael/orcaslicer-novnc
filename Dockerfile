@@ -16,7 +16,9 @@ RUN apt-get update -y && \
 
 # Install cc-novnc dependencies
 RUN apt update && apt install -y --no-install-recommends --allow-unauthenticated \
-    nodejs npm
+    nodejs npm \
+    # Dependencies for electron
+    libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev
 
 # Clean up
 RUN apt autoclean -y && \
@@ -24,43 +26,45 @@ RUN apt autoclean -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Install cc-novnc
-COPY /app /app
-RUN cd /app && npm install && npm run build
-RUN mkdir -p /cc-novnc && cp -r /app/dist/* /cc-novnc
+COPY /app /cc-novnc
+RUN cd /cc-novnc && \
+    npm install
+
+# Install electron
+RUN npm install -g electron@latest
+
+# Copy Easy noVNC binary
 COPY --from=easy-novnc-build /bin/easy-novnc /bin/easy-novnc
 
 # Make directories for volumes
-RUN mkdir -p /etc/supervisor/conf.d /cc-novnc/save
+RUN mkdir -p /cc-novnc/config && \
+    mkdir -p /cc-novnc/save
 
 # Bind volumes for configuration and data
-VOLUME /etc/supervisor/
+VOLUME /cc-novnc/config
 VOLUME /cc-novnc/save
 
 # Expose the noVNC port
 EXPOSE 8080
 
-# Modified code for cc-novnc
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    software-properties-common && \
-    add-apt-repository universe && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    fuse libfuse2 libnss3
+# Create a user
+RUN useradd -ms /bin/bash cc-novnc
 
-RUN apt-get install libasound2 libgbm-dev -y
+# Create supervisord log file
+RUN touch /supervisord.log && \
+    chown cc-novnc:cc-novnc /supervisord.log
 
-# Create user
-RUN useradd -ms /bin/bash cc-novnc && \
-    mkdir -p /home/cc-novnc && \
-    chown -R cc-novnc:cc-novnc /home/cc-novnc && \
-    mkdir -p /var/log/supervisor && \
-    touch /var/log/supervisor/supervisord.log && \
-    chown -R cc-novnc:cc-novnc /var/log/supervisor
+# Copy startup script
+COPY /cc-novnc.sh /cc-novnc/cc-novnc.sh
+RUN chmod +x /cc-novnc/cc-novnc.sh
 
-RUN chown -R cc-novnc:cc-novnc /cc-novnc
-RUN chown -R cc-novnc:cc-novnc /etc/supervisor/conf.d
-RUN touch /supervisord.log
-RUN chown cc-novnc:cc-novnc /supervisord.log
+# New electron dependency (put here for faster builds)
+RUN apt update && apt install -y --no-install-recommends --allow-unauthenticated \
+    libasound2
 
-CMD ["bash", "-c", "chown -R cc-novnc:cc-novnc /cc-novnc/CookieClicker-1.0.0.AppImage && exec gosu cc-novnc supervisord -c /etc/supervisor/supervisord.conf"]
+# Clean up
+RUN apt autoclean -y && \
+    apt autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+CMD ["bash", "-c", "exec gosu cc-novnc supervisord -c /cc-novnc/config/supervisord.conf"]
