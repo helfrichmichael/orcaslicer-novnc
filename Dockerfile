@@ -30,11 +30,10 @@ RUN mkdir -p /cc-novnc && cp -r /app/dist/* /cc-novnc
 COPY --from=easy-novnc-build /bin/easy-novnc /bin/easy-novnc
 
 # Make directories for volumes
-RUN mkdir -p /etc/supervisor/conf.d /etc/xdg/openbox /cc-novnc/save
+RUN mkdir -p /etc/supervisor/conf.d /cc-novnc/save
 
 # Bind volumes for configuration and data
 VOLUME /etc/supervisor/
-VOLUME /etc/xdg/openbox
 VOLUME /cc-novnc/save
 
 # Expose the noVNC port

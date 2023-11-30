@@ -12,5 +12,3 @@ services:
     volumes:
       - ./save:/cc-novnc/save
       - ./conf/supervisor:/etc/supervisor
-      - ./conf/openbox:/etc/xdg/openbox
-    network_mode: "bridge"
